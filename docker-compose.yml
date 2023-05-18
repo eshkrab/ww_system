@@ -10,10 +10,12 @@ services:
       - 5000:5000
     volumes:
           - ./content:/app/content:Z
+          - config-volume:./config/
   player:
     build: ./player/player_v0
     ports:
       - 6000:6000
     volumes:
           - ./content:/app/content
+          - config-volume:./config/
 

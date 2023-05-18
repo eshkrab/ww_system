@@ -1,0 +1,19 @@
+version: '3'
+services:
+  gui:
+    build: ./gui/gui_v0
+    ports:
+      - 8080:8080
+  server:
+    build: ./server/server_v0
+    ports:
+      - 5000:5000
+    volumes:
+          - ./content:/app/content:Z
+  player:
+    build: ./player/player_v0
+    ports:
+      - 6000:6000
+    volumes:
+          - ./content:/app/content
+

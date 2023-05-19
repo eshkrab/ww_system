@@ -2,20 +2,51 @@ version: '3'
 services:
   gui:
     build: ./gui/gui_v0
+    # network_mode: "host"
+    networks:
+      - wwnetwork
     ports:
-      - 8080:8080
+      - 80:80
+      # - 8000:80
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:8080"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 5
+
   server:
     build: ./server/server_v0
+    # network_mode: "host"
+    networks:
+      - wwnetwork
     ports:
-      - 5000:5000
+    #   # - 5555:5555
+      - 8000:8000
     volumes:
-          - ./content:/app/content:Z
-          - config-volume:./config/
+      - ./content:/app/content:Z
+      - ./config:/app/config:Z
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
   player:
     build: ./player/player_v0
-    ports:
-      - 6000:6000
+    # network_mode: "host"
+    networks:
+      - wwnetwork
+    # ports:
+      # - 5555:5555
+    privileged: true  
     volumes:
-          - ./content:/app/content
-          - config-volume:./config/
+      - ./content:/app/content
+      - ./config:/app/config
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5555"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
+networks:
+  wwnetwork:

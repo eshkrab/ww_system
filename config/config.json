@@ -1,0 +1,16 @@
+{
+    "zmq": {
+        "ip_server": "player",
+        "ip_player": "*",
+        "port": "5555"
+    },
+    "rest_api": {
+        "ip": "0.0.0.0",
+        "port": "8000"
+    },
+    "interface": "wifi",
+    "brightness_level": 50,
+
+    "video_dir": "content"
+}
+

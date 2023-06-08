@@ -7,12 +7,11 @@ services:
       - wwnetwork
     ports:
       - 80:80
-      # - 8000:80
-    # healthcheck:
-    #   test: ["CMD", "curl", "-f", "http://localhost:8080"]
-    #   interval: 30s
-    #   timeout: 10s
-    #   retries: 5
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   server:
     build: ./server/server_v0
@@ -47,6 +46,19 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+      
+  ola:
+    build: ./ola/ola_v0
+    networks:
+      - wwnetwork
+    privileged: true
+    volumes:
+      # - ./avahi-daemon.conf:/etc/avahi/avahi-daemon.conf
+      # - ./supervisord.conf:/etc/supervisor/supervisord.conf
+      - ./config:/app/config
+    ports:
+      - 9090:9090
+      - 9010:9010
 
 networks:
   wwnetwork:

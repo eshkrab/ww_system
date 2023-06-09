@@ -16,7 +16,7 @@
         "log_level": "DEBUG"
     },
 
-    "video_dir": "ww_content",
+    "video_dir": "content",
     "video_ext": [ "ww" ]
 }
 

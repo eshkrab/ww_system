@@ -22,7 +22,7 @@ services:
     #   # - 5555:5555
       - 8000:8000
     volumes:
-      - ./content:/app/content:Z
+      - ./ww_content:/app/content:Z
       - ./config:/app/config:Z
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000"]
@@ -35,11 +35,11 @@ services:
     # network_mode: "host"
     networks:
       - wwnetwork
-    # ports:
-      # - 5555:5555
+    ports:
+      - 5568:5568/udp
     privileged: true  
     volumes:
-      - ./content:/app/content
+      - ./ww_content:/app/content
       - ./config:/app/config
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5555"]
@@ -62,3 +62,10 @@ services:
 
 networks:
   wwnetwork:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.enable_ip_masquerade: "true"
+    ipam:
+     config:
+       - subnet: 172.20.0.0/16
+         gateway: 172.20.0.1

@@ -71,7 +71,23 @@
         accept_hostkey: yes
         force: yes
 
+    - name: Set owner of repository
+      ansible.builtin.file:
+        path: '/home/ww/ww_system'
+        state: directory
+        owner: ww
+        group: ww
+        recurse: yes
+
     - name: Remove the copied key
       file:
         path: /tmp/id_rsa
         state: absent
+
+  handlers:
+    - name: Restart docker
+      systemd:
+        state: restarted
+        daemon_reload: yes
+        name: docker
+

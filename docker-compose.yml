@@ -2,11 +2,7 @@ version: '3'
 services:
   gui:
     build: ./gui/gui_v0
-    # network_mode: "host"
-    networks:
-      - wwnetwork
-    ports:
-      - 80:80
+    network_mode: "host"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080"]
       interval: 30s
@@ -15,12 +11,7 @@ services:
 
   server:
     build: ./server/server_v0
-    # network_mode: "host"
-    networks:
-      - wwnetwork
-    ports:
-    #   # - 5555:5555
-      - 8000:8000
+    network_mode: "host"
     volumes:
       - ./ww_content:/app/content:Z
       - ./config:/app/config:Z
@@ -32,11 +23,7 @@ services:
 
   player:
     build: ./player/player_v0
-    # network_mode: "host"
-    networks:
-      - wwnetwork
-    ports:
-      - 5568:5568/udp
+    network_mode: "host"
     privileged: true  
     volumes:
       - ./ww_content:/app/content
@@ -49,23 +36,82 @@ services:
       
   ola:
     build: ./ola/ola_v0
-    networks:
-      - wwnetwork
+    network_mode: "host"
     privileged: true
     volumes:
-      # - ./avahi-daemon.conf:/etc/avahi/avahi-daemon.conf
-      # - ./supervisord.conf:/etc/supervisor/supervisord.conf
       - ./config:/app/config
     ports:
       - 9090:9090
       - 9010:9010
 
-networks:
-  wwnetwork:
-    driver: bridge
-    driver_opts:
-      com.docker.network.bridge.enable_ip_masquerade: "true"
-    ipam:
-     config:
-       - subnet: 172.20.0.0/16
-         gateway: 172.20.0.1
+# version: '3'
+# services:
+#   gui:
+#     build: ./gui/gui_v0
+#     # network_mode: "host"
+#     networks:
+#       - wwnetwork
+#     ports:
+#       - 80:80
+#     healthcheck:
+#       test: ["CMD", "curl", "-f", "http://localhost:8080"]
+#       interval: 30s
+#       timeout: 10s
+#       retries: 5
+#
+#   server:
+#     build: ./server/server_v0
+#     # network_mode: "host"
+#     networks:
+#       - wwnetwork
+#     ports:
+#     #   # - 5555:5555
+#       - 8000:8000
+#     volumes:
+#       - ./ww_content:/app/content:Z
+#       - ./config:/app/config:Z
+#     healthcheck:
+#       test: ["CMD", "curl", "-f", "http://localhost:8000"]
+#       interval: 30s
+#       timeout: 10s
+#       retries: 5
+#
+#   player:
+#     build: ./player/player_v0
+#     # network_mode: "host"
+#     networks:
+#       - wwnetwork
+#     ports:
+#       - 5568:5568/udp
+#     privileged: true
+#     volumes:
+#       - ./ww_content:/app/content
+#       - ./config:/app/config
+#     healthcheck:
+#       test: ["CMD", "curl", "-f", "http://localhost:5555"]
+#       interval: 30s
+#       timeout: 10s
+#       retries: 5
+#
+#   ola:
+#     build: ./ola/ola_v0
+#     networks:
+#       - wwnetwork
+#     privileged: true
+#     volumes:
+#       # - ./avahi-daemon.conf:/etc/avahi/avahi-daemon.conf
+#       # - ./supervisord.conf:/etc/supervisor/supervisord.conf
+#       - ./config:/app/config
+#     ports:
+#       - 9090:9090
+#       - 9010:9010
+#
+# networks:
+#   wwnetwork:
+#     driver: bridge
+#     driver_opts:
+#       com.docker.network.bridge.enable_ip_masquerade: "true"
+#     ipam:
+#      config:
+#        - subnet: 172.20.0.0/16
+#          gateway: 172.20.0.1

@@ -1,0 +1,12 @@
+[submodule "player"]
+	path = player
+	url = git@github.com:eshkrab/ww_system_player.git
+[submodule "server"]
+	path = server
+	url = git@github.com:eshkrab/ww_system_server.git
+[submodule "gui"]
+	path = gui
+	url = git@github.com:eshkrab/ww_system_gui.git
+[submodule "ola"]
+	path = ola
+	url = git@github.com:eshkrab/ww_system_ola.git

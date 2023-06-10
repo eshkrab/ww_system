@@ -1,0 +1,77 @@
+- name: Install Docker on Armbian
+  hosts: my_hosts
+  become: yes
+  remote_user: ww
+  gather_facts: yes
+  any_errors_fatal: true
+
+  tasks:
+    - name: Remove existing Docker packages
+      apt:
+        name: ['docker', 'docker-engine', 'docker.io', 'containerd', 'runc']
+        state: absent
+
+    - name: Ensure iptables is available in /usr/bin
+      ansible.builtin.file:
+        src: /sbin/iptables
+        dest: /usr/bin/iptables
+        state: link
+
+    - name: Add extra arguments to armbianEnv
+      lineinfile:
+        path: /boot/armbianEnv.txt
+        line: "extraargs=systemd.unified_cgroup_hierarchy=0"
+        insertafter: EOF
+      tags: armbian
+
+    - name: Update iptables alternatives
+      command: update-alternatives --set iptables /usr/sbin/iptables-legacy
+      tags: debian
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Docker and Docker Compose
+      apt:
+        name: ['docker.io', 'docker-compose']
+        state: present
+
+    - name: Ensure Docker service is running
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Add user to docker group
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: yes
+
+    - name: Install git
+      apt:
+        name: git
+        state: present
+
+    - name: Copy private SSH key for git
+      copy:
+        src: ~/.ssh/id_rsa
+        dest: /tmp/id_rsa
+        mode: '0600'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+
+    - name: Clone repository
+      git:
+        repo: 'git@github.com:eshkrab/ww_system.git'
+        dest: '/home/ww/ww_system'
+        version: 'stable'
+        key_file: /tmp/id_rsa
+        accept_hostkey: yes
+        force: yes
+
+    - name: Remove the copied key
+      file:
+        path: /tmp/id_rsa
+        state: absent

@@ -1,7 +1,7 @@
 version: '3'
 services:
   gui:
-    build: ./gui/gui_v0
+    build: ./gui
     network_mode: "host"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080"]
@@ -10,7 +10,7 @@ services:
       retries: 5
 
   server:
-    build: ./server/server_v0
+    build: ./server
     network_mode: "host"
     volumes:
       - ./ww_content:/app/content:Z
@@ -22,7 +22,7 @@ services:
       retries: 5
 
   player:
-    build: ./player/player_v0
+    build: ./player
     network_mode: "host"
     privileged: true  
     volumes:
@@ -35,7 +35,7 @@ services:
       retries: 5
       
   ola:
-    build: ./ola/ola_v0
+    build: ./ola
     network_mode: "host"
     privileged: true
     volumes:

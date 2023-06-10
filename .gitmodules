@@ -1,9 +1,0 @@
-[submodule "ww_system_server"]
-	path = ww_system_server
-	url = git@github.com:eshkrab/ww_system_server.git
-[submodule "ww_system_gui"]
-	path = ww_system_gui
-	url = git@github.com:eshkrab/ww_system_gui.git
-[submodule "ww_system_player"]
-	path = ww_system_player
-	url = git@github.com:eshkrab/ww_system_player.git

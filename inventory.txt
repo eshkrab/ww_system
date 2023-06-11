@@ -1,2 +1,2 @@
 [my_hosts]
-192.168.86.103 ansible_ssh_user=ww
+192.168.86.23 ansible_ssh_user=ww

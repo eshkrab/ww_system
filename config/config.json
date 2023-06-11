@@ -1,7 +1,7 @@
 {
     "zmq": {
-        "ip_server": "player",
-        "ip_player": "*",
+        "ip_server": "localhost",
+        "ip_player": "localhost",
         "port": "5555"
     },
     "rest_api": {

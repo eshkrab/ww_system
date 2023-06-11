@@ -49,11 +49,22 @@
         groups: docker
         append: yes
 
-    - name: Install git
-      apt:
-        name: git
-        state: present
+  handlers:
+    - name: Restart docker
+      systemd:
+        state: restarted
+        daemon_reload: yes
+        name: docker
 
+- name: Clone repository
+  hosts: my_hosts
+  become: yes
+  remote_user: ww
+  gather_facts: yes
+  any_errors_fatal: true
+  tags: repo
+
+  tasks:
     - name: Copy private SSH key for git
       copy:
         src: ~/.ssh/id_rsa
@@ -84,10 +95,10 @@
         path: /tmp/id_rsa
         state: absent
 
-  handlers:
-    - name: Restart docker
-      systemd:
-        state: restarted
-        daemon_reload: yes
-        name: docker
+ # handlers:
+ #    - name: Restart docker
+ #      systemd:
+ #        state: restarted
+ #        daemon_reload: yes
+ #        name: docker
 

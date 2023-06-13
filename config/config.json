@@ -8,6 +8,10 @@
         "ip": "0.0.0.0",
         "port": "8000"
     },
+
+    "sacn": {
+        "bind_address": "10.0.0.5"
+    },
     "interface": "wifi",
     "brightness_level": 50,
 

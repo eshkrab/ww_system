@@ -35,12 +35,12 @@ services:
       timeout: 10s
       retries: 5
 
-  ola:
-    build: ./ola
-    network_mode: "host"
-    privileged: true
-    volumes:
-      - ./config:/app/config
+  # ola:
+  #   build: ./ola
+  #   network_mode: "host"
+  #   privileged: true
+  #   volumes:
+  #     - ./config:/app/config
 
 
 # ################################ internal network

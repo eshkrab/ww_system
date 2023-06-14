@@ -5,7 +5,7 @@
         "port": "5555"
     },
     "rest_api": {
-        "ip": "localhost",
+        "ip": "0.0.0.0",
         "port": "8000"
     },
 

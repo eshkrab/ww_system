@@ -62,6 +62,21 @@
         enabled: yes
       tags: mdns
 
+    - name: Set up Avahi to respond to a specific hostname
+      lineinfile:
+        path: /etc/avahi/avahi-daemon.conf
+        regexp: '^#host-name='
+        line: 'host-name=ww_system'
+        state: present
+      tags: mdns
+
+    - name: Restart Avahi to apply the changes
+      systemd:
+        name: avahi-daemon
+        state: restarted
+      tags: mdns
+
+
   handlers:
     - name: Restart docker
       systemd:

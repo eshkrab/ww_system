@@ -10,7 +10,8 @@
     },
 
     "sacn": {
-        "bind_address": "10.0.0.5"
+        "bind_address": "10.0.0.5",
+        "universe_count": 30
     },
     "interface": "wifi",
     "brightness_level": 50,

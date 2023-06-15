@@ -15,7 +15,7 @@
         "multicast": 1
     },
     "interface": "wifi",
-    "brightness_level": 50,
+    "brightness_level": 40,
 
     "debug": {
         "dummy_send": "False",

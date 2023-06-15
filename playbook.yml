@@ -49,6 +49,19 @@
         groups: docker
         append: yes
 
+    - name: Install Avahi Daemon
+      apt:
+        name: ['avahi-daemon']
+        state: present
+      tags: mdns
+
+    - name: Ensure Avahi service is running
+      service:
+        name: avahi-daemon
+        state: started
+        enabled: yes
+      tags: mdns
+
   handlers:
     - name: Restart docker
       systemd:
@@ -95,10 +108,17 @@
         path: /tmp/id_rsa
         state: absent
 
- # handlers:
- #    - name: Restart docker
- #      systemd:
- #        state: restarted
- #        daemon_reload: yes
- #        name: docker
+    - name: Create symlink for docker-compose-app service
+      file:
+        src: /home/ww/ww_system/docker-compose-app.service
+        dest: /etc/systemd/system/docker-compose-app.service
+        state: link
+      tags: service_setup
+
+    - name: Enable docker-compose-app service
+      systemd:
+        name: docker-compose-app
+        enabled: yes
+        daemon_reload: yes
+      tags: service_setup
 

@@ -1,0 +1,83 @@
+---
+- name: Install Docker and Configure Wi-Fi & Access Point
+  hosts: my_hosts
+  become: yes
+  remote_user: ww
+  gather_facts: yes
+  any_errors_fatal: true
+
+  vars:
+    repository_url: 'git@github.com:eshkrab/ww_system.git'
+    repository_dest: '/home/ww/ww_system'
+    docker_compose_service: 'docker-compose-app'
+    avahi_hostname: 'ww_system'
+
+  tasks:
+    # Wi-Fi and Access Point Setup
+    - name: Install required packages for Wi-Fi and Access Point
+      apt:
+        name:
+          - network-manager
+          - hostapd
+        state: present
+      tags: wifi_access_point
+
+    - name: Configure NetworkManager
+      template:
+        src: networkmanager.conf.j2
+        dest: /etc/NetworkManager/NetworkManager.conf
+        owner: root
+        group: root
+        mode: 0644
+      notify: Restart NetworkManager
+      tags: wifi_access_point
+
+    - name: Configure Wi-Fi connection
+      template:
+        src: wifi-connection.j2
+        dest: /etc/NetworkManager/system-connections/wifi-connection
+        owner: root
+        group: root
+        mode: 0600
+      notify: Restart NetworkManager
+      tags: wifi_access_point
+
+    - name: Configure hostapd
+      template:
+        src: hostapd.conf.j2
+        dest: /etc/hostapd/hostapd.conf
+        owner: root
+        group: root
+        mode: 0600
+      notify: Restart hostapd
+      tags: wifi_access_point
+
+    - name: Create connectivity check script
+      copy:
+        src: connectivity-check.sh
+        dest: /usr/local/bin/connectivity-check.sh
+        owner: root
+        group: root
+        mode: 0755
+      tags: wifi_access_point
+
+    - name: Run connectivity check script periodically
+      cron:
+        name: Run connectivity check
+        minute: "*/2"   # Run every 5 minutes
+        job: /usr/local/bin/connectivity-check.sh
+        user: root
+      tags: wifi_access_point
+
+  handlers:
+    - name: Restart NetworkManager
+      systemd:
+        name: NetworkManager
+        state: restarted
+      listen: Restart NetworkManager
+
+    - name: Restart hostapd
+      systemd:
+        name: hostapd
+        state: restarted
+

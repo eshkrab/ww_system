@@ -1,0 +1,18 @@
+[connection]
+id=wifi-connection
+type=wifi
+
+[wifi]
+ssid={{ ssid }}
+mode=infrastructure
+
+[wifi-security]
+key-mgmt=wpa-psk
+psk={{ password }}
+
+[ipv4]
+method=auto
+
+[ipv6]
+method=auto
+

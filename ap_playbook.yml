@@ -38,6 +38,7 @@
           - network-manager
           - hostapd
           - dnsmasq
+          - iptables
         state: present
       tags: wifi_access_point
 
@@ -61,6 +62,27 @@
           unmanaged-devices=interface-name:wlan0
         dest: /etc/NetworkManager/conf.d/unmanaged.conf
       notify: Restart NetworkManager
+
+    # - name: Set static IP for wlan0
+    #   copy:
+    #     content: |
+    #       auto wlan0
+    #       iface wlan0 inet static
+    #           address {{ wifi.dhcp_router }}
+    #           netmask 255.255.255.0
+    #     dest: /etc/network/interfaces.d/wlan0
+    #   notify: Restart networking
+    #   tags: wifi_access_point
+
+    - name: Configure armbian.ap.nat
+      template:
+        src: armbian.ap.nat.j2
+        dest: /etc/network/interfaces.d/armbian.ap.nat
+        owner: root
+        group: root
+        mode: 0644
+      notify: Restart networking
+      tags: wifi_access_point
 
     - name: Configure hostapd
       template:
@@ -88,6 +110,11 @@
         name: NetworkManager
         state: restarted
       listen: Restart NetworkManager
+
+    - name: Restart networking
+      service:
+        name: networking
+        state: restarted
 
     - name: Restart hostapd
       systemd:

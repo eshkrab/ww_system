@@ -1,0 +1,7 @@
+# armbian NAT hostapd
+allow-hotplug wlan0
+iface wlan0 inet static
+        address {{wifi.dhcp_router}}
+        netmask 255.255.255.0
+        network {{wifi.dhcp_network}}
+        broadcast {{wifi.dhcp_broadcast}}

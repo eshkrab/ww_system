@@ -1,4 +1,13 @@
 interface=wlan0
-dhcp-range={{ wifi.dhcp_range_start }},{{ wifi.dhcp_range_end }},255.255.255.0,24h
-dhcp-option=option:router,{{ wifi.dhcp_router }}
+except-interface=lo
+bind-interfaces
+no-dhcp-interface=eth0
+dhcp-range=wlan0,{{ wifi.dhcp_range_start }},{{ wifi.dhcp_range_end }},255.255.255.0,24h
+dhcp-option=wlan0,3,{{ wifi.dhcp_router }}
+dhcp-option=wlan0,6,{{ wifi.dhcp_router }}
+
+
+server=/#/{{ wifi.dhcp_router}}
+
+no-resolv
 

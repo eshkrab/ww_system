@@ -1,5 +1,5 @@
 
-ption domain-name "example.com";
+option domain-name "example.com";
 option domain-name-servers 8.8.8.8, 8.8.4.4;
 
 default-lease-time {{ wifi.dhcp_lease_time}};
@@ -8,6 +8,6 @@ max-lease-time {{ wifi.dhcp_lease_time }};
 subnet {{ wifi.dhcp_subnet }} netmask {{ wifi.dhcp_netmask }} {
   range {{ wifi.dhcp_range_start }} {{ wifi.dhcp_range_end }};
   option routers {{ wifi.dhcp_router }};
-  option broadcast-address {{ wifi.dhcp_subnet }};
+  option broadcast-address {{ wifi.dhcp_subnet_broadcast }};
 }
 

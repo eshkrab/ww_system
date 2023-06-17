@@ -19,6 +19,12 @@
         file: wifi-credentials.conf
         name: wifi
 
+       # Upgrade packages
+    - name: Upgrade packages
+      apt:
+        upgrade: yes
+        update_cache: yes
+
     # Update apt cache
     - name: Update apt cache
       apt:
@@ -28,6 +34,7 @@
     - name: Install required packages for Wi-Fi and Access Point
       apt:
         name:
+          - vim
           - network-manager
           - hostapd
           - isc-dhcp-server
@@ -57,7 +64,7 @@
     - name: Configure hostapd
       template:
         src: hostapd.conf.j2
-        dest: /etc/hostapd/hostapd.conf
+        dest: /etc/hostapd.conf
         owner: root
         group: root
         mode: 0600

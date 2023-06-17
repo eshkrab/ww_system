@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Specify your network connection name
-CONNECTION_NAME="liquid_forrest"
+CONNECTION_NAME="{{ wifi.ssid }}"
 
 # Try to connect to the specific network
 nmcli con up id "$CONNECTION_NAME"

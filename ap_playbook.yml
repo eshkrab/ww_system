@@ -13,6 +13,12 @@
     avahi_hostname: 'ww_system'
 
   tasks:
+    # Load Wi-Fi credentials from the file
+    - name: Include Wi-Fi credentials
+      include_vars:
+        file: wifi-credentials.conf
+        name: wifi
+
     # Wi-Fi and Access Point Setup
     - name: Install required packages for Wi-Fi and Access Point
       apt:
@@ -54,7 +60,7 @@
 
     - name: Create connectivity check script
       copy:
-        src: connectivity-check.sh
+        src: connectivity-check.sh.j2
         dest: /usr/local/bin/connectivity-check.sh
         owner: root
         group: root
@@ -64,7 +70,7 @@
     - name: Run connectivity check script periodically
       cron:
         name: Run connectivity check
-        minute: "*/2"   # Run every 5 minutes
+        minute: "*/2"   # Run every 2 minutes
         job: /usr/local/bin/connectivity-check.sh
         user: root
       tags: wifi_access_point

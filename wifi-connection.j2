@@ -3,12 +3,12 @@ id=wifi-connection
 type=wifi
 
 [wifi]
-ssid={{ ssid }}
+ssid={{ wifi.ssid }}
 mode=infrastructure
 
 [wifi-security]
 key-mgmt=wpa-psk
-psk={{ password }}
+psk={{ wifi.password }}
 
 [ipv4]
 method=auto

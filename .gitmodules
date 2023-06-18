@@ -10,3 +10,6 @@
 [submodule "ola"]
 	path = ola
 	url = git@github.com:eshkrab/ww_system_ola.git
+[submodule "serial"]
+	path = serial
+	url = git@github.com:eshkrab/ww_system_serial.git

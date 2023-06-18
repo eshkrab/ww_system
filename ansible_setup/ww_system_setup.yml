@@ -76,7 +76,7 @@
 
     - name: Create symlink for ww-system-app service
       file:
-        src: "{{ repository_dest }}/{{ docker_compose_service }}.service"
+        src: "{{ repository_dest }}/ansible_setup/{{ docker_compose_service }}.service"
         dest: "/etc/systemd/system/{{ docker_compose_service }}.service"
         state: link
       tags: service_setup

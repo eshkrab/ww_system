@@ -1,0 +1,93 @@
+- name: WW System Setup
+  hosts: my_hosts
+  become: yes
+  remote_user: ww
+  gather_facts: yes
+  any_errors_fatal: true
+
+  vars:
+    repository_url: 'git@github.com:eshkrab/ww_system.git'
+    repository_dest: '/home/ww/ww_system'
+    docker_compose_service: 'ww-system-app'
+
+  tasks:
+    # Avahi Configuration
+    - name: Install Avahi Daemon
+      apt:
+        name: ['avahi-daemon']
+        state: present
+      tags: mdns
+
+    - name: Ensure Avahi service is running
+      service:
+        name: avahi-daemon
+        state: started
+        enabled: yes
+      tags: mdns
+
+    - name: Set up Avahi to respond to a specific hostname
+      lineinfile:
+        path: /etc/avahi/avahi-daemon.conf
+        regexp: '^#host-name='
+        line: 'host-name={{ avahi_hostname }}'
+        state: present
+      tags: mdns
+
+    - name: Restart Avahi to apply the changes
+      systemd:
+        name: avahi-daemon
+        state: restarted
+      tags: mdns
+
+    # Repository Cloning and Service Setup
+    - name: Copy private SSH key for git
+      copy:
+        src: ~/.ssh/id_rsa
+        dest: /tmp/id_rsa
+        mode: '0600'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+
+    - name: Clone repository
+      git:
+        repo: "{{ repository_url }}"
+        dest: "{{ repository_dest }}"
+        version: 'stable'
+        key_file: /tmp/id_rsa
+        accept_hostkey: yes
+        force: yes
+      register: repository_clone
+      tags: repo
+
+    - name: Set owner of repository
+      ansible.builtin.file:
+        path: "{{ repository_dest }}"
+        state: directory
+        owner: ww
+        group: ww
+        recurse: yes
+      tags: repo
+
+    - name: Remove the copied key
+      file:
+        path: /tmp/id_rsa
+        state: absent
+      tags: repo
+
+    - name: Create symlink for ww-system-app service
+      file:
+        src: "{{ repository_dest }}/{{ docker_compose_service }}.service"
+        dest: "/etc/systemd/system/{{ docker_compose_service }}.service"
+        state: link
+      tags: service_setup
+      when: repository_clone.changed
+
+    - name: Enable ww-system-app service
+      systemd:
+        name: "{{ docker_compose_service }}"
+        enabled: yes
+        daemon_reload: yes
+      tags: service_setup
+      when: repository_clone.changed
+
+

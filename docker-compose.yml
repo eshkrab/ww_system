@@ -35,6 +35,21 @@ services:
       timeout: 10s
       retries: 5
 
+  serial:
+    build: ./serial
+    network_mode: "host"
+    privileged: true
+    devices:
+      - "/dev/ttyUSB0:/dev/ttyUSB0"  # Replace with the actual serial port device
+    volumes:
+      - ./ww_content:/app/content
+      - ./config:/app/config
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5555"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
   # ola:
   #   build: ./ola
   #   network_mode: "host"

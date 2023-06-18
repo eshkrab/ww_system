@@ -19,7 +19,7 @@
 
     "serial": {
         "port": "/dev/ttyUSB0",
-        "baudrate": 115200,
+        "baudrate": 115200
     },
 
     "interface": "wifi",

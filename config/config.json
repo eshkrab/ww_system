@@ -17,6 +17,11 @@
         "multicast": 1
     },
 
+    "serial": {
+        "port": "/dev/ttyUSB0",
+        "baudrate": 115200,
+    },
+
     "interface": "wifi",
     "brightness_level": 100,
     "fps": 30,

@@ -1,8 +1,10 @@
 {
     "zmq": {
-        "ip_server": "localhost",
-        "ip_player": "*",
-        "port": "5555"
+        "ip_connect": "localhost",
+        "ip_bind": "*",
+        "port_player_pub": "5555",
+        "port_server_pub": "5556",
+        "port_serial_pub": "5557"
     },
     "rest_api": {
         "ip": "0.0.0.0",
@@ -14,8 +16,10 @@
         "universe_count": 31,
         "multicast": 1
     },
+
     "interface": "wifi",
-    "brightness_level": 250,
+    "brightness_level": 100,
+    "fps": 30,
 
     "debug": {
         "dummy_send": "False",

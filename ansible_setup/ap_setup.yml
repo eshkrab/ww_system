@@ -54,6 +54,16 @@
         dest: /etc/NetworkManager/conf.d/unmanaged.conf
       notify: Restart NetworkManager
       tags: wifi_access_point
+      
+    - name: Configure Static IP on WLAN0
+      template:
+        src: wlan0.j2
+        dest: /etc/network/interfaces.d/wlan0
+        owner: root
+        group: root
+        mode: 0644
+      notify: Restart networking
+      tags: wifi_access_point
 
     # Configure hostapd
     - name: Configure hostapd

@@ -12,7 +12,7 @@
     },
 
     "sacn": {
-        "bind_address": "192.168.86.147",
+        "bind_address": "192.168.86.127",
         "universe_count": 31,
         "multicast": 1
     },

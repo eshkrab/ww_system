@@ -27,7 +27,7 @@
     "fps": 30,
 
     "debug": {
-        "dummy_send": "True",
+        "dummy_send": "False",
         "log_level": "DEBUG"
     },
 

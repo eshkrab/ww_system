@@ -31,6 +31,7 @@
         regexp: '^#host-name='
         line: 'host-name={{ avahi_hostname }}'
         state: present
+        mode: '0644'
       tags: mdns
 
     - name: Restart Avahi to apply the changes

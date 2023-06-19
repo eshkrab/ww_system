@@ -44,11 +44,11 @@ services:
     volumes:
       - ./ww_content:/app/content
       - ./config:/app/config
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5555"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:5557"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 5
 
   # ola:
   #   build: ./ola

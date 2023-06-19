@@ -11,35 +11,6 @@
     docker_compose_service: 'ww-system-app'
 
   tasks:
-    # Avahi Configuration
-    - name: Install Avahi Daemon
-      apt:
-        name: ['avahi-daemon']
-        state: present
-      tags: mdns
-
-    - name: Ensure Avahi service is running
-      service:
-        name: avahi-daemon
-        state: started
-        enabled: yes
-      tags: mdns
-
-    - name: Set up Avahi to respond to a specific hostname
-      lineinfile:
-        path: /etc/avahi/avahi-daemon.conf
-        regexp: '^#host-name='
-        line: 'host-name={{ avahi_hostname }}'
-        state: present
-        mode: '0644'
-      tags: mdns
-
-    - name: Restart Avahi to apply the changes
-      systemd:
-        name: avahi-daemon
-        state: restarted
-      tags: mdns
-
     # Repository Cloning and Service Setup
     - name: Copy private SSH key for git
       copy:

@@ -115,6 +115,59 @@
     #     name: hostapd
     #     enabled: yes
 
+
+    # Update the hostname
+    - name: Update /etc/hostname
+      ansible.builtin.copy:
+        dest: /etc/hostname
+        content: "{{ avahi_hostname }}"
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Get current hostname from /etc/hosts
+      ansible.builtin.shell: "grep -P '^127\.0\.?.?[1atgt]*\.1\s' /etc/hosts | awk '{print $2}'"
+      register: current_hostname
+
+    - name: Update /etc/hosts
+      ansible.builtin.replace:
+        path: /etc/hosts
+        regexp: "{{ current_hostname.stdout }}"
+        replace: "{{ avahi_hostname }}"
+        backup: yes
+        owner: root
+        group: root
+        mode: 0644
+
+    # Avahi Configuration
+    - name: Install Avahi Daemon
+      apt:
+        name: ['avahi-daemon']
+        state: present
+      tags: mdns
+
+    - name: Ensure Avahi service is running
+      service:
+        name: avahi-daemon
+        state: started
+        enabled: yes
+      tags: mdns
+
+    - name: Set up Avahi to respond to a specific hostname
+      lineinfile:
+        path: /etc/avahi/avahi-daemon.conf
+        regexp: '^#host-name='
+        line: 'host-name={{ avahi_hostname }}'
+        state: present
+        mode: '0644'
+      tags: mdns
+
+    - name: Restart Avahi to apply the changes
+      systemd:
+        name: avahi-daemon
+        state: restarted
+      tags: mdns
+
     # Ensure that the dnsmasq service is enabled
     - name: Enable dnsmasq service
       systemd:

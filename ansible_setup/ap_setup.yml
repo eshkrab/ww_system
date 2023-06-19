@@ -126,7 +126,7 @@
         mode: 0644
 
     - name: Get current hostname from /etc/hosts
-      ansible.builtin.shell: "grep -P '^127\.0\.?.?[1atgt]*\.1\s' /etc/hosts | awk '{print $2}'"
+      ansible.builtin.command: awk '/^127\.0\.1\.1\s/ {print $2}' /etc/hosts
       register: current_hostname
 
     - name: Update /etc/hosts

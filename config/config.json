@@ -1,6 +1,6 @@
 {
     "zmq": {
-        "ip_connect": "localhost",
+        "ip_connect": "ww-system.local",
         "ip_bind": "*",
         "port_player_pub": "5555",
         "port_server_pub": "5556",

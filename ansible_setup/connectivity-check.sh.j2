@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Specify your network connection name
-CONNECTION_NAME="{{ wifi.ssid }}"
-CONNECTION_PASS="{{ wifi.password }}"
+CONNECTION_NAME="{{ network.ssid }}"
+CONNECTION_PASS="{{ network.password }}"
 
 if [[ $(nmcli -t -f NAME con show --active) == *"$CONNECTION_NAME"* ]]; then
     # skip all if already connected.

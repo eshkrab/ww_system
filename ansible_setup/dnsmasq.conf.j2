@@ -2,9 +2,9 @@ interface=wlan0
 except-interface=lo
 bind-interfaces
 no-dhcp-interface=eth0
-dhcp-range=wlan0,{{ wifi.dhcp_range_start }},{{ wifi.dhcp_range_end }},255.255.255.0,24h
-dhcp-option=wlan0,3,{{ wifi.dhcp_router }}
-dhcp-option=wlan0,6,{{ wifi.dhcp_router }}
+dhcp-range=wlan0,{{ network.dhcp_range_start }},{{ network.dhcp_range_end }},255.255.255.0,24h
+dhcp-option=wlan0,3,{{ network.dhcp_router }}
+dhcp-option=wlan0,6,{{ network.dhcp_router }}
 
 
 server=8.8.8.8

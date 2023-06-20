@@ -8,28 +8,28 @@
 
 
   tasks:
-    # Load Wi-Fi credentials from the file
-    - name: Include Wi-Fi credentials
+    # Load network variables from the file
+    - name: Include network variables
       include_vars:
-        file: ../wifi-credentials.conf
-        name: wifi
+        file: ../network.conf
+        name: network
+      tags: [ ethernet, wifi_access_point ]
 
-    - name: Create connectivity check script
+    # Configure ethernet network to dhcp + static
+    - name: Configure ethernet
+      shell: nmcli connection modify "Wired connection 1" ipv4.addresses {{ network.eth_static_ip }}/24
+      tags: ethernet 
+
+    # Configure NetworkManager
+    - name: Configure NetworkManager
       template:
-        src: connectivity-check.sh.j2
-        dest: /usr/local/bin/connectivity-check.sh
+        src: networkmanager.conf.j2
+        dest: /etc/NetworkManager/NetworkManager.conf
         owner: root
         group: root
-        mode: 0755
-      tags: wifi_access_point
-
-    - name: Run connectivity check script periodically
-      cron:
-        name: Run connectivity check
-        minute: "*/1"   # Run every 1 minutes
-        job: /usr/local/bin/connectivity-check.sh
-        user: root
-      tags: wifi_access_point
+        mode: 0644
+      notify: Restart NetworkManager
+      tags: ethernet
 
     # Update apt cache
     - name: Update apt cache
@@ -47,30 +47,6 @@
           - dnsmasq
         state: present
       tags: wifi_access_point
-
-    # Configure NetworkManager
-    - name: Configure NetworkManager
-      template:
-        src: networkmanager.conf.j2
-        dest: /etc/NetworkManager/NetworkManager.conf
-        owner: root
-        group: root
-        mode: 0644
-      notify: Restart NetworkManager
-      tags: wifi_access_point
-
-    # Configure NetworkManager to ignore wlan0
-    # - name: Configure NetworkManager to ignore wlan0
-    #   copy:
-    #     content: |
-    #       [main]
-    #       plugins=keyfile
-
-    #       [keyfile]
-    #       unmanaged-devices=interface-name:wlan0
-    #     dest: /etc/NetworkManager/conf.d/unmanaged.conf
-    #   notify: Restart NetworkManager
-    #   tags: wifi_access_point
       
     - name: Configure Static IP on WLAN0
       template:
@@ -104,17 +80,29 @@
       notify: Restart dnsmasq
       tags: wifi_access_point
 
-    # Ensure that the hostapd service is unmasked and enabled
-    # - name: Unmask hostapd service
-    #   systemd:
-    #     name: hostapd
-    #     masked: no
+    # Ensure that the dnsmasq service is enabled
+    - name: Enable dnsmasq service
+      systemd:
+        name: dnsmasq
+        enabled: yes
+      tags: wifi_access_point
 
-    # - name: Enable hostapd service
-    #   systemd:
-    #     name: hostapd
-    #     enabled: yes
+    - name: Create connectivity check script
+      template:
+        src: connectivity-check.sh.j2
+        dest: /usr/local/bin/connectivity-check.sh
+        owner: root
+        group: root
+        mode: 0755
+      tags: wifi_access_point
 
+    - name: Run connectivity check script periodically
+      cron:
+        name: Run connectivity check
+        minute: "*/1"   # Run every 1 minutes
+        job: /usr/local/bin/connectivity-check.sh
+        user: root
+      tags: wifi_access_point
 
     # Update the hostname
     - name: Update /etc/hostname
@@ -167,14 +155,6 @@
         name: avahi-daemon
         state: restarted
       tags: mdns
-
-    # Ensure that the dnsmasq service is enabled
-    - name: Enable dnsmasq service
-      systemd:
-        name: dnsmasq
-        enabled: yes
-
-
 
   handlers:
     - name: Restart NetworkManager

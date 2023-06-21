@@ -24,7 +24,8 @@
     },
 
     "synker": {
-        "udp_port": "55555"
+        "udp_port": "55555",
+        "polling_period_s": 180
     },
 
     "interface": "wifi",

@@ -1,2 +1,2 @@
 [my_hosts]
-192.168.86.58 ansible_user=ww ansible_become_pass=glitterpixels avahi_hostname=ww-system-claude
+192.168.86.127 ansible_user=ww ansible_become_pass=glitterpixels avahi_hostname=ww-system

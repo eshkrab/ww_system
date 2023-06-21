@@ -13,3 +13,6 @@
 [submodule "serial"]
 	path = serial
 	url = git@github.com:eshkrab/ww_system_serial.git
+[submodule "synker"]
+	path = serial
+	url = git@github.com:eshkrab/ww_system_synker.git

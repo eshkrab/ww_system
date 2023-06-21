@@ -104,7 +104,6 @@
         user: root
       tags: wifi_access_point
 
-    # Update the hostname
     - name: Update /etc/hostname
       ansible.builtin.copy:
         dest: /etc/hostname
@@ -117,12 +116,19 @@
       ansible.builtin.command: awk '/^127\.0\.1\.1\s/ {print $2}' /etc/hosts
       register: current_hostname
 
-    - name: Update /etc/hosts
-      ansible.builtin.replace:
+    - name: Remove existing entry with current_hostname in /etc/hosts
+      ansible.builtin.lineinfile:
         path: /etc/hosts
-        regexp: "{{ current_hostname.stdout }}"
-        replace: "{{ avahi_hostname }}"
-        backup: yes
+        regexp: "^127.0.1.1.*{{ current_hostname.stdout }}$"
+        state: absent
+
+    - name: Add new entry with avahi_hostname in /etc/hosts if not exists
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        regexp: "^127.0.1.1.*{{ avahi_hostname }}$"
+        line: "127.0.1.1   {{ avahi_hostname }}"
+        state: present
+        insertafter: "^127\\.0\\.0\\.1.*"
         owner: root
         group: root
         mode: 0644

@@ -14,5 +14,5 @@
 	path = serial
 	url = git@github.com:eshkrab/ww_system_serial.git
 [submodule "synker"]
-	path = serial
+	path = synker
 	url = git@github.com:eshkrab/ww_system_synker.git

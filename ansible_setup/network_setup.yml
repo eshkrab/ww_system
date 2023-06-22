@@ -66,7 +66,7 @@
         owner: root
         group: root
         mode: 0644
-      notify: Restart hostapd
+      # notify: Restart hostapd
       tags: wifi_access_point
 
     # Configure dnsmasq

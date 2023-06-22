@@ -24,7 +24,7 @@
     },
 
     "synker": {
-        "udp_port": "55555",
+        "udp_port": "5565",
         "polling_period_s": 1
     },
 

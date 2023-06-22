@@ -69,6 +69,12 @@
       # notify: Restart hostapd
       tags: wifi_access_point
 
+    - name: Disable hostapd service
+      systemd:
+        name: hostapd
+        enabled: no
+      tags: wifi_access_point
+
     # Configure dnsmasq
     - name: Configure dnsmasq
       template:

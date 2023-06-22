@@ -14,13 +14,22 @@ else
     if nmcli dev wifi connect "$CONNECTION_NAME" password "$CONNECTION_PASS";
     then
         # Wait for connection to establish
-        sleep 10
+        sleep 15
+    fi
 
-        # Check if the specific network is active
-        if [[ $(nmcli -t -f NAME con show --active) == *"$CONNECTION_NAME"* ]]; then
-            echo "Connected to WiFi Network"
+    # Check if the specific network is active
+    if [[ $(nmcli -t -f NAME con show --active) == *"$CONNECTION_NAME"* ]]; then
+        echo "Connected to WiFi Network"
+    else
+        echo "WiFi Network could not be connected. Starting hostapd"
+
+        LINES=$(ps -ef | grep "/usr/sbin/hostapd /etc/hostapd/hostapd.conf" | grep -v "grep" | wc -l)
+        if [ $LINES -gt 0 ];
+        then
+            echo "Hostapd running already"
         else
-            echo "WiFi Network could not be connected. Starting hostapd"
+            echo "Hostapd not running yet. Starting hostapd"
+
             # If WiFi is not connected, ensure hostapd is running
             # Release control of wlan0 from NetworkManager
             nmcli dev set wlan0 managed no
@@ -35,28 +44,6 @@ else
             ip addr add {{ network.dhcp_router }}/24 dev wlan0
             sleep 1
             # Hotspot up.
-            /usr/sbin/hostapd /etc/hostapd/hostapd.conf
-        fi
-    else 
-        echo "WiFi Network is not available or interface is already not managed. Checking if hostapd is active."
-
-        LINES=$(ps -ef | grep "/usr/sbin/hostapd /etc/hostapd/hostapd.conf" | grep -v "grep" | wc -l)
-
-        if [ $LINES -gt 0];
-        then
-            echo "Hostapd running already"
-        else
-            echo "Hostapd not running. Starting hostapd"
-
-            # Copy of above.
-            nmcli dev set wlan0 managed no
-            sleep 1
-            ifdown wlan0
-            sleep 1
-            ifup wlan0
-            sleep 1
-            ip addr add {{ network.dhcp_router }}/24 dev wlan0
-            sleep 1
             /usr/sbin/hostapd /etc/hostapd/hostapd.conf
         fi
     fi

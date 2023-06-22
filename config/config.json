@@ -13,8 +13,8 @@
     },
 
     "sacn": {
-        "bind_address": "192.168.86.127",
-        "universe_count": 31,
+        "bind_address": "10.0.0.5",
+        "universe_count": 45,
         "multicast": 1
     },
 

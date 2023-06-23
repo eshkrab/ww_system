@@ -14,7 +14,7 @@
 
     "sacn": {
         "bind_address": "10.0.0.5",
-        "universe_count": 45,
+        "universe_count": 53,
         "multicast": 1
     },
 

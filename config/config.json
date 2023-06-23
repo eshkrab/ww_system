@@ -11,33 +11,28 @@
         "ip": "0.0.0.0",
         "port": "8000"
     },
-
     "sacn": {
         "bind_address": "10.0.0.5",
         "universe_count": 53,
         "multicast": 1
     },
-
     "serial": {
         "port": "/dev/ttyUSB0",
         "baudrate": 115200
     },
-
     "synker": {
         "udp_port": "5565",
         "polling_period_s": 1
     },
-
     "interface": "wifi",
-    "brightness_level": 45,
+    "brightness_level": 18.0,
     "fps": 30,
-
     "debug": {
         "dummy_send": "False",
         "log_level": "DEBUG"
     },
-
     "video_dir": "content",
-    "video_ext": [ "ww" ]
+    "video_ext": [
+        "ww"
+    ]
 }
-

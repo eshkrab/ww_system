@@ -29,7 +29,7 @@
     },
 
     "interface": "wifi",
-    "brightness_level": 100,
+    "brightness_level": 45,
     "fps": 30,
 
     "debug": {

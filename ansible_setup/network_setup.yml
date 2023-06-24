@@ -162,6 +162,22 @@
         mode: '0644'
       tags: mdns
 
+    - name: Ensure 'allow-interfaces=eth0' stays commented out
+      lineinfile:
+        path: /etc/avahi/avahi-daemon.conf
+        regexp: '^allow-interfaces=eth0'
+        line: '#allow-interfaces=eth0'
+        state: present
+        mode: '0644'
+
+    - name: Add 'allow-interfaces=wlan0' line to the config file
+      lineinfile:
+        path: /etc/avahi/avahi-daemon.conf
+        regexp: '^allow-interfaces=wlan0'
+        line: 'allow-interfaces=wlan0'
+        state: present
+        mode: '0644'
+
     - name: Restart Avahi to apply the changes
       systemd:
         name: avahi-daemon

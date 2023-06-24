@@ -1,0 +1,8 @@
+auto lo eth0 eth0:0
+iface lo inet loopback
+
+iface eth0 inet dhcp
+
+iface eth0:0 inet static
+    address {{ network.eth_static_ip }}
+    netmask 255.255.255.0

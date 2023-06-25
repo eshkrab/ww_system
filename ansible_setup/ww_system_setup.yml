@@ -62,4 +62,10 @@
       tags: service_setup
       when: repository_clone.changed
 
+    # Build the system containers
+    - name: Run docker-compose build
+      ansible.builtin.command:
+        cmd: docker-compose build
+        chdir: "{{ repository_dest }}"
+
 

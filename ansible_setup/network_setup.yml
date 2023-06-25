@@ -199,6 +199,7 @@
         path: /etc/avahi/avahi-daemon.conf
         regexp: '^allow-interfaces=wlan0'
         line: 'allow-interfaces=wlan0'
+        insertafter: '^#allow-interfaces=eth0'
         state: present
         mode: '0644'
 

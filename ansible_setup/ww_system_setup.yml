@@ -7,8 +7,8 @@
 
   vars:
     repository_url: 'git@github.com:eshkrab/ww_system.git'
-    repository_dest: '/home/ww/ww_system'
-    docker_compose_service: 'ww-system-app'
+    repository_dest: '/home/ww/litpi'
+    docker_compose_service: 'litpi'
 
   tasks:
     # Repository Cloning and Service Setup

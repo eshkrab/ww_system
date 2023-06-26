@@ -51,7 +51,7 @@
         owner: root
         group: root
         mode: 0644
-      notify: Restart NetworkManager
+      # notify: Restart NetworkManager
       tags: ethernet
 
 
@@ -79,7 +79,7 @@
         owner: root
         group: root
         mode: 0644
-      notify: Restart networking
+      # notify: Restart networking
       tags: wifi_access_point
 
     # Configure hostapd

@@ -15,33 +15,33 @@
         name: network
       tags: [ ethernet, wifi_access_point ]
 
-    # Configure ethernet network to dhcp + static
-    - name: Configure ethernet
-      shell: >
-        nmcli connection modify "Wired connection 1" ipv4.addresses {{ network.eth_static_ip }}/24;
-        nmcli con modify "Wired connection 1" ipv4.method manual;
-        nmcli con modify "Wired connection 1" connection.autoconnect yes
+    # # Configure ethernet network to dhcp + static
+    # - name: Configure ethernet
+    #   shell: >
+    #     nmcli connection modify "Wired connection 1" ipv4.addresses {{ network.eth_static_ip }}/24;
+    #     nmcli con modify "Wired connection 1" ipv4.method manual;
+    #     nmcli con modify "Wired connection 1" connection.autoconnect yes
+    #   tags: ethernet
+
+
+    # Disable NetworkManager control over eth0
+    - name: Disable NetworkManager control over eth0
+      ansible.builtin.lineinfile:
+        path: /etc/NetworkManager/NetworkManager.conf
+        regexp: "^unmanaged-devices="
+        line: "unmanaged-devices=interface-name:eth0"
+        insertafter: '^\\[keyfile\\]'
       tags: ethernet
 
-    #
-    # # Disable NetworkManager control over eth0
-    # - name: Disable NetworkManager control over eth0
-    #   ansible.builtin.lineinfile:
-    #     path: /etc/NetworkManager/NetworkManager.conf
-    #     regexp: "^unmanaged-devices="
-    #     line: "unmanaged-devices=interface-name:eth0"
-    #     insertafter: '^\\[keyfile\\]'
-    #   tags: ethernet
-    #
-    # # Configure /etc/network/interfaces.d/eth0
-    # - name: Configure /etc/network/interfaces.d/eth0
-    #   ansible.builtin.template:
-    #     src: eth0.j2
-    #     dest: /etc/network/interfaces.d/eth0
-    #     owner: root
-    #     group: root
-    #     mode: 0644
-    #   tags: ethernet
+    # Configure /etc/network/interfaces.d/eth0
+    - name: Configure /etc/network/interfaces.d/eth0
+      ansible.builtin.template:
+        src: eth0.j2
+        dest: /etc/network/interfaces.d/eth0
+        owner: root
+        group: root
+        mode: 0644
+      tags: ethernet
 
     # Configure NetworkManager
     - name: Configure NetworkManager
@@ -69,7 +69,7 @@
           - network-manager
           - hostapd
           - dnsmasq
-          # - isc-dhcp-client
+          - isc-dhcp-client
         state: present
       tags: wifi_access_point
       

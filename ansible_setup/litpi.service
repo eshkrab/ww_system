@@ -4,7 +4,7 @@ After=network.target docker.service
 Requires=docker.service
 
 [Service]
-WorkingDirectory=/home/ww/ww_system
+WorkingDirectory=/home/ww/litpi
 ExecStart=/usr/bin/docker-compose up 
 ExecStop=/usr/bin/docker-compose stop
 TimeoutStartSec=0

@@ -69,6 +69,7 @@
           - network-manager
           - hostapd
           - dnsmasq
+          # - isc-dhcp-client
         state: present
       tags: wifi_access_point
       

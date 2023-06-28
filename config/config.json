@@ -23,7 +23,7 @@
     "synker": {
         "sync_interval": "60",
         "udp_port": "5565",
-        "polling_period_s": 0.1
+        "polling_period_s": 1
     },
     "interface": "wifi",
     "brightness_level": 18.0,

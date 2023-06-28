@@ -21,7 +21,7 @@
         "baudrate": 115200
     },
     "synker": {
-        "sync_interval": "3600",
+        "sync_interval": "60",
         "udp_port": "5565",
         "polling_period_s": 1
     },

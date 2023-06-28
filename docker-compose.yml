@@ -54,6 +54,7 @@ services:
     network_mode: "host"
     privileged: true
     volumes:
+      - ./ww_content:/app/content:Z
       - ./config:/app/config
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5558"]

@@ -5,8 +5,8 @@ services:
     build: ./gui
     network_mode: "host"
     environment:
-      - _serverIP=${SERVER_IP}
-      - _serverPort=${SERVER_PORT}
+      - server_ip=${SERVER_IP}
+      - server_port=${SERVER_PORT}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080"]
       interval: 30s

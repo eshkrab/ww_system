@@ -1,3 +1,2 @@
 [my_hosts]
-10.10.0.122 ansible_user=ww ansible_become_pass=glitterpixels avahi_hostname=litpi
 10.10.0.35 ansible_user=ww ansible_become_pass=glitterpixels avahi_hostname=litpi-marcelle

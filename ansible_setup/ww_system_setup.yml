@@ -48,7 +48,7 @@
 
     - name: Generate .env file
       template: 
-        src: .env.j2   # This is the path to your template in Ansible
+        src: env.j2   # This is the path to your template in Ansible
         dest: "{{repository_dest}}/.env"       # This is where you want to save the generated .env file on the host
         owner: root
         group: root

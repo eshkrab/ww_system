@@ -4,9 +4,6 @@ services:
   gui:
     build: ./gui
     network_mode: "host"
-    environment:
-      - server_ip=${SERVER_IP}
-      - server_port=${SERVER_PORT}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080"]
       interval: 30s

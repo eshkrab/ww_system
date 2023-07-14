@@ -74,9 +74,32 @@
         state: present
       tags: wifi_access_point
 
-    - name: Download and install Tailscale
+    - name: Install Tailscale prerequisites
+      apt: 
+        name: ['apt-transport-https', 'gnupg']
+        state: present
+        update_cache: yes
+      
+    - name: Add the Tailscale GPG key
       shell: |
-        curl -fsSL https://tailscale.com/install.sh | sh
+        curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.gpg | sudo apt-key add -
+      args:
+        warn: false
+
+    - name: Add the Tailscale APT repository
+      shell: |
+        curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.list | sudo tee /etc/apt/sources.list.d/tailscale.list
+      args:
+        warn: false
+
+    - name: Update package list
+      apt: 
+        update_cache: yes
+
+    - name: Install Tailscale
+      apt: 
+        name: tailscale
+        state: present
       
     - name: Configure Static IP on WLAN0
       template:

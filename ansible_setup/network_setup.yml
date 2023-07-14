@@ -66,12 +66,17 @@
       apt:
         name:
           - vim
+          - liblo-tools
           - network-manager
           - hostapd
           - dnsmasq
           - isc-dhcp-client
         state: present
       tags: wifi_access_point
+
+    - name: Download and install Tailscale
+      shell: |
+        curl -fsSL https://tailscale.com/install.sh | sh
       
     - name: Configure Static IP on WLAN0
       template:

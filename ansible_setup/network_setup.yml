@@ -81,16 +81,10 @@
         update_cache: yes
       
     - name: Add the Tailscale GPG key
-      shell: |
-        curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.gpg | sudo apt-key add -
-      args:
-        warn: false
+      shell: curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.gpg | sudo apt-key add -
 
     - name: Add the Tailscale APT repository
-      shell: |
-        curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.list | sudo tee /etc/apt/sources.list.d/tailscale.list
-      args:
-        warn: false
+      shell: curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.list | sudo tee /etc/apt/sources.list.d/tailscale.list
 
     - name: Update package list
       apt: 

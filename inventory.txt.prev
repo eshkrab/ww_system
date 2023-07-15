@@ -1,0 +1,2 @@
+[my_hosts]
+10.0.0.5 ansible_user=ww ansible_become_pass=glitterpixels avahi_hostname=litpi-marcelle

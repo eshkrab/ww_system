@@ -1,0 +1,38 @@
+{
+   "connection" : "eth",
+   "framerate" : 30,
+   "leds" : {
+      "data_pins" : [ 14, 12, 4, 2, 18, 5, 10, 9 ],
+      "led_type" : "WS2813",
+      "num_pixels" : 300,
+      "num_strips" : 8
+   },
+   "control": {
+     "osc": 1,
+     "osc_port": 6006,
+     "serial": 0,
+     "serial_baud": "9600",
+     "serial_rx": 25,
+     "serial_tx": 21
+   },
+   "network":{
+       "DHCP": 0,
+       "IP": "10.0.0.15",
+       "gw":"10.0.0.1",
+       "subnet":"255.255.255.0"
+   },
+   "settings" : {
+      "autoplay" : 1,
+      "autoplay_speed" : 30,
+      "autostart" : 1,
+      "brightness" : 100,
+      "play_mode" : "streaming",
+      "shuffle" : 1
+   },
+   "streaming":{
+     "multicast": 1,
+     "start_chan": 33,
+     "start_uni": 15
+   }
+}
+

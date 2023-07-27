@@ -4,6 +4,7 @@ services:
   gui:
     build: ./gui
     network_mode: "host"
+    restart: always
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080"]
       interval: 30s
@@ -16,6 +17,7 @@ services:
     volumes:
       - ./ww_content:/app/content:Z
       - ./config:/app/config:Z
+    restart: always
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000"]
       interval: 30s
@@ -29,6 +31,7 @@ services:
     volumes:
       - ./ww_content:/app/content
       - ./config:/app/config
+    restart: always
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5555"]
       interval: 30s
@@ -43,6 +46,7 @@ services:
       - "/dev/ttyUSB0:/dev/ttyUSB0"  # Replace with the actual serial port device
     volumes:
       - ./config:/app/config
+    restart: always
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5557"]
       interval: 30s
@@ -56,6 +60,7 @@ services:
     volumes:
       - ./ww_content:/app/content:Z
       - ./config:/app/config
+    restart: always
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5558"]
       interval: 30s

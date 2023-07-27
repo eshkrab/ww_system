@@ -1,2 +1,2 @@
 [my_hosts]
-litpi-jeanne.local ansible_user=ww ansible_become_pass=glitterpixels avahi_hostname=litpi-jeanne
+10.10.0.95 ansible_user=ww ansible_become_pass=glitterpixels avahi_hostname=litpi-marcelle

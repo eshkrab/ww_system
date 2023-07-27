@@ -46,7 +46,7 @@ services:
       - "/dev/ttyUSB0:/dev/ttyUSB0"  # Replace with the actual serial port device
     volumes:
       - ./config:/app/config
-    restart: always
+    # restart: always
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5557"]
       interval: 30s

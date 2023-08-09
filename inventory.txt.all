@@ -1,0 +1,4 @@
+[my_hosts]
+10.10.0.45 ansible_user=ww ansible_become_pass=glitterpixels avahi_hostname=litpi-claude
+10.10.0.52 ansible_user=ww ansible_become_pass=glitterpixels avahi_hostname=litpi-marcelle
+10.10.0.55 ansible_user=ww ansible_become_pass=glitterpixels avahi_hostname=litpi-jeanne
